@@ -1,0 +1,8 @@
+*.jar
+*.log
+*.MF
+*.txt
+.nfs*
+bin/
+logs/
+disk/
