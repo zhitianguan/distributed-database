@@ -298,7 +298,7 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
             successor.setStartingHashIdx(newServerEndingIdx);
         }
         String predecessorFullAddress = predecessor.getNodeHost() + ":" + predecessor.getNodePort();
-        String successorFullAddress = successor.getNodeHost() + ":" + successor.getNodePort();
+        //String successorFullAddress = successor.getNodeHost() + ":" + successor.getNodePort();
         Message initServerTransfer = new Message(serverAddressPort,"",KVMessage.StatusType.INITIALIZE_DATA_TRANSFER);
         this.sendToClient(predecessorFullAddress, initServerTransfer);
     }
