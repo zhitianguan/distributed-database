@@ -151,6 +151,13 @@ public class ECSClient implements IECSClient,Runnable {
             }
         }
 
+        try{
+            serverSocket.close();
+        } catch (IOException e) {
+            logger.error("Error! " + "Unable to close socket connection to server");
+        }
+
+
         return false;
     }
 
@@ -292,7 +299,7 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
         }
         String predecessorFullAddress = predecessor.getNodeHost() + ":" + predecessor.getNodePort();
         String successorFullAddress = successor.getNodeHost() + ":" + successor.getNodePort();
-        Message initServerTransfer = new Message(successorFullAddress,"",KVMessage.StatusType.INITIALIZE_DATA_TRANSFER);
+        Message initServerTransfer = new Message(serverAddressPort,"",KVMessage.StatusType.INITIALIZE_DATA_TRANSFER);
         this.sendToClient(predecessorFullAddress, initServerTransfer);
     }
 
@@ -318,7 +325,7 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
         String targetReplica2 = "";
 
         switch (type){
-            
+
             case SERVER_DISCONNECTED:
                 logger.info("Handling server removal here" + clientAddress + " here");
                 //do some logic here to find the targets?
@@ -422,6 +429,17 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
                 // Remove the server from metadata
                 metadata.remove(hashKey);
                 this.dataTransferTarget = successor;
+
+                //update list of client connections here
+                for(ClientConnection cc : this.clientConnections){
+                    String connectionFullAddress = cc.getServerAddress() + ":" + cc.getServerPort();
+                    //System.out.println("Checking nodeName:" + nodeName + "vs ccFullAddress:" + connectionFullAddress);
+                    if(connectionFullAddress.equals(nodeName)){
+                        clientConnections.remove(cc);
+                        break;
+                    }
+                }
+
             }
 
 
