@@ -1,0 +1,427 @@
+2024-03-22 17:09:46,514 INFO  [main] root: Initializing ECS ...
+2024-03-22 17:09:46,516 INFO  [main] root: ECS listening on port: 7000
+2024-03-22 17:09:57,881 INFO  [main] root: Connected to localhost on port 44708
+2024-03-22 17:09:57,882 INFO  [Thread-0] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:09:57,882 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'REGISTER_SERVER 127.0.0.1 4000'
+2024-03-22 17:09:57,889 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:09:57,889 INFO  [Thread-0] root: SEND 	<127.0.0.1:44708>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:10:01,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:01,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:01,520 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:01,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:06,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:06,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:06,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:06,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:11,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:11,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:11,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:11,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:16,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:16,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:16,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:16,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:21,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:21,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:21,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:21,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:25,842 INFO  [main] root: Connected to localhost on port 41680
+2024-03-22 17:10:25,842 INFO  [Thread-1] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:10:25,843 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: 'REGISTER_SERVER 127.0.0.1 4001'
+2024-03-22 17:10:25,843 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:4000
+2024-03-22 17:10:25,843 INFO  [Thread-1] root: SEND 	<127.0.0.1:44708>: 'INITIALIZE_DATA_TRANSFER 127.0.0.1:4000 '
+2024-03-22 17:10:25,844 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:25,844 INFO  [Thread-1] root: SEND 	<127.0.0.1:44708>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,ec46d996c70e7c62ee012027e653547e,99ab61779bfb0faa85122ee2dd523ea8;314065681014050982805725329310291809406:127.0.0.1,4001,99ab61779bfb0faa85122ee2dd523ea8,ec46d996c70e7c62ee012027e653547e; null'
+2024-03-22 17:10:25,844 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:25,844 INFO  [Thread-1] root: SEND 	<127.0.0.1:41680>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,ec46d996c70e7c62ee012027e653547e,99ab61779bfb0faa85122ee2dd523ea8;314065681014050982805725329310291809406:127.0.0.1,4001,99ab61779bfb0faa85122ee2dd523ea8,ec46d996c70e7c62ee012027e653547e; null'
+2024-03-22 17:10:26,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:26,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:26,519 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:26,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:26,520 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:41680>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:26,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:26,521 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:26,521 INFO  [Thread-1] root: Server127.0.0.1:4001responded to heartbeat ping
+2024-03-22 17:10:31,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:31,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:31,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:31,519 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:41680>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:31,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:31,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:31,520 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:31,521 INFO  [Thread-1] root: Server127.0.0.1:4001responded to heartbeat ping
+2024-03-22 17:10:36,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:36,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:36,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:36,519 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:41680>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:36,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:36,520 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:36,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:36,520 INFO  [Thread-1] root: Server127.0.0.1:4001responded to heartbeat ping
+2024-03-22 17:10:41,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:41,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:41,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:41,519 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:41680>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:41,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:41,520 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:41,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:41,520 INFO  [Thread-1] root: Server127.0.0.1:4001responded to heartbeat ping
+2024-03-22 17:10:44,487 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: 'SHUTDOWN  '
+2024-03-22 17:10:44,487 INFO  [Thread-1] root: SEND 	<127.0.0.1:41680>: 'SHUTDOWN null null'
+2024-03-22 17:10:44,487 INFO  [Thread-1] root: Shut down handler called here
+2024-03-22 17:10:44,488 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:44,488 INFO  [Thread-1] root: SEND 	<127.0.0.1:44708>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:10:44,488 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:44,488 INFO  [Thread-1] root: SEND 	<127.0.0.1:41680>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:10:44,497 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:41680>: ''
+2024-03-22 17:10:44,498 ERROR [Thread-1] root: Server disconnected
+2024-03-22 17:10:46,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:46,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:46,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:46,518 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:41680, server disconnected
+2024-03-22 17:10:46,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:46,519 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:46,519 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:41680 here
+2024-03-22 17:10:51,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:51,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:51,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:51,519 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:41680, server disconnected
+2024-03-22 17:10:51,519 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:41680 here
+2024-03-22 17:10:51,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:51,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:10:56,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:10:56,518 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:44708>: 'HEARTBEAT_PING  '
+2024-03-22 17:10:56,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:10:56,519 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:41680, server disconnected
+2024-03-22 17:10:56,519 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:10:56,519 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:41680 here
+2024-03-22 17:10:56,520 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:11:00,941 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:44708>: 'SHUTDOWN  '
+2024-03-22 17:11:00,941 INFO  [Thread-0] root: SEND 	<127.0.0.1:44708>: 'SHUTDOWN_LAST null null'
+2024-03-22 17:11:00,941 INFO  [Thread-0] root: Shut down handler called here
+2024-03-22 17:11:00,941 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:11:00,942 INFO  [Thread-0] root: SEND 	<127.0.0.1:44708>: 'METADATA_UPDATE  null'
+2024-03-22 17:11:00,942 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:11:00,942 ERROR [Thread-0] root: Failed to send message : java.net.SocketException: Socket closed
+2024-03-22 17:11:01,518 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:44708
+2024-03-22 17:11:01,518 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:44708, server disconnected
+2024-03-22 17:11:01,518 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:44708 here
+2024-03-22 17:11:01,519 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:41680
+2024-03-22 17:11:01,520 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:41680, server disconnected
+2024-03-22 17:11:01,520 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:41680 here
+2024-03-22 17:16:08,684 INFO  [main] root: Initializing ECS ...
+2024-03-22 17:16:08,687 INFO  [main] root: ECS listening on port: 7000
+2024-03-22 17:16:11,435 INFO  [main] root: Connected to localhost on port 39954
+2024-03-22 17:16:11,436 INFO  [Thread-0] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:16:11,437 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'REGISTER_SERVER 127.0.0.1 4000'
+2024-03-22 17:16:11,445 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:11,445 INFO  [Thread-0] root: SEND 	<127.0.0.1:39954>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:16:13,689 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:13,690 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39954>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:13,691 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:13,692 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:16:17,043 INFO  [main] root: Connected to localhost on port 39964
+2024-03-22 17:16:17,043 INFO  [Thread-1] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:16:17,044 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:39964>: 'REGISTER_SERVER 127.0.0.1 4001'
+2024-03-22 17:16:17,044 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:4000
+2024-03-22 17:16:17,044 INFO  [Thread-1] root: SEND 	<127.0.0.1:39954>: 'INITIALIZE_DATA_TRANSFER 127.0.0.1:4000 '
+2024-03-22 17:16:17,045 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:17,045 INFO  [Thread-1] root: SEND 	<127.0.0.1:39954>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,ec46d996c70e7c62ee012027e653547e,99ab61779bfb0faa85122ee2dd523ea8;314065681014050982805725329310291809406:127.0.0.1,4001,99ab61779bfb0faa85122ee2dd523ea8,ec46d996c70e7c62ee012027e653547e; null'
+2024-03-22 17:16:17,045 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:39964
+2024-03-22 17:16:17,045 INFO  [Thread-1] root: SEND 	<127.0.0.1:39964>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,ec46d996c70e7c62ee012027e653547e,99ab61779bfb0faa85122ee2dd523ea8;314065681014050982805725329310291809406:127.0.0.1,4001,99ab61779bfb0faa85122ee2dd523ea8,ec46d996c70e7c62ee012027e653547e; null'
+2024-03-22 17:16:18,688 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:18,689 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39954>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:18,689 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39964
+2024-03-22 17:16:18,690 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:18,692 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39964>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:18,692 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:16:18,693 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:39964>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:18,693 INFO  [Thread-1] root: Server127.0.0.1:4001responded to heartbeat ping
+2024-03-22 17:16:23,688 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:23,689 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39954>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:23,689 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39964
+2024-03-22 17:16:23,690 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:23,690 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39964>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:23,691 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:16:23,691 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:39964>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:23,691 INFO  [Thread-1] root: Server127.0.0.1:4001responded to heartbeat ping
+2024-03-22 17:16:24,751 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:39964>: 'SHUTDOWN  '
+2024-03-22 17:16:24,751 INFO  [Thread-1] root: SEND 	<127.0.0.1:39964>: 'SHUTDOWN null null'
+2024-03-22 17:16:24,752 INFO  [Thread-1] root: Shut down handler called here
+2024-03-22 17:16:24,754 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:24,754 INFO  [Thread-1] root: SEND 	<127.0.0.1:39954>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:16:24,754 INFO  [Thread-1] root: Sending message to server : 127.0.0.1:39964
+2024-03-22 17:16:24,754 INFO  [Thread-1] root: SEND 	<127.0.0.1:39964>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:16:24,762 INFO  [Thread-1] root: RECEIVE 	<127.0.0.1:39964>: ''
+2024-03-22 17:16:24,762 ERROR [Thread-1] root: Server disconnected
+2024-03-22 17:16:28,688 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:28,689 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39954>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:28,689 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39964
+2024-03-22 17:16:28,689 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:39964, server disconnected
+2024-03-22 17:16:28,690 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:28,690 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:16:28,691 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:39964 here
+2024-03-22 17:16:33,688 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:33,689 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39954>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:33,690 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:33,690 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:16:38,688 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:38,689 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:39954>: 'HEARTBEAT_PING  '
+2024-03-22 17:16:38,690 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:16:38,690 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:16:41,175 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:39954>: 'SHUTDOWN  '
+2024-03-22 17:16:41,176 INFO  [Thread-0] root: SEND 	<127.0.0.1:39954>: 'SHUTDOWN_LAST null null'
+2024-03-22 17:16:41,176 INFO  [Thread-0] root: Shut down handler called here
+2024-03-22 17:16:41,177 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:41,177 INFO  [Thread-0] root: SEND 	<127.0.0.1:39954>: 'METADATA_UPDATE  null'
+2024-03-22 17:16:43,688 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:39954
+2024-03-22 17:16:43,689 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:39954, server disconnected
+2024-03-22 17:16:43,689 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:39954 here
+2024-03-22 17:17:00,062 INFO  [main] root: Initializing ECS ...
+2024-03-22 17:17:00,065 INFO  [main] root: ECS listening on port: 7000
+2024-03-22 17:17:03,034 INFO  [main] root: Connected to localhost on port 51180
+2024-03-22 17:17:03,035 INFO  [Thread-0] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:17:03,036 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:51180>: 'REGISTER_SERVER 127.0.0.1 4000'
+2024-03-22 17:17:03,044 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:51180
+2024-03-22 17:17:03,044 INFO  [Thread-0] root: SEND 	<127.0.0.1:51180>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:17:05,067 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:51180
+2024-03-22 17:17:05,068 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:51180>: 'HEARTBEAT_PING  '
+2024-03-22 17:17:05,069 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:51180>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:17:05,072 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:17:10,066 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:51180
+2024-03-22 17:17:10,067 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:51180>: 'HEARTBEAT_PING  '
+2024-03-22 17:17:10,068 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:51180>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:17:10,068 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:17:15,066 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:51180
+2024-03-22 17:17:15,067 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:51180>: 'HEARTBEAT_PING  '
+2024-03-22 17:17:15,068 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:51180>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:17:15,068 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:17:18,722 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:51180>: 'SHUTDOWN  '
+2024-03-22 17:17:18,723 INFO  [Thread-0] root: SEND 	<127.0.0.1:51180>: 'SHUTDOWN_LAST null null'
+2024-03-22 17:17:18,723 INFO  [Thread-0] root: Shut down handler called here
+2024-03-22 17:17:18,725 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:51180
+2024-03-22 17:17:18,725 INFO  [Thread-0] root: SEND 	<127.0.0.1:51180>: 'METADATA_UPDATE  null'
+2024-03-22 17:17:20,066 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:51180
+2024-03-22 17:17:20,067 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:51180, server disconnected
+2024-03-22 17:17:20,069 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:51180 here
+2024-03-22 17:18:50,945 INFO  [main] root: Initializing ECS ...
+2024-03-22 17:18:50,948 INFO  [main] root: ECS listening on port: 7000
+2024-03-22 17:19:03,432 INFO  [main] root: Connected to localhost on port 49014
+2024-03-22 17:19:03,434 INFO  [Thread-0] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:19:03,440 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'REGISTER_SERVER 127.0.0.1 4000'
+2024-03-22 17:19:03,453 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:03,454 INFO  [Thread-0] root: SEND 	<127.0.0.1:49014>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:19:05,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:05,951 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:05,952 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:05,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:10,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:10,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:10,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:10,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:15,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:15,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:15,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:15,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:20,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:20,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:20,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:20,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:25,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:25,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:25,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:25,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:30,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:30,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:30,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:30,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:35,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:35,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:35,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:35,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:40,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:40,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:40,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:40,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:45,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:45,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:45,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:45,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:50,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:50,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:50,950 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:50,950 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:19:55,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:19:55,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:19:55,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:19:55,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:00,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:00,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:00,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:00,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:05,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:05,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:05,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:05,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:10,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:10,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:10,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:10,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:15,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:15,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:15,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:15,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:20,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:20,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:20,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:20,953 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:25,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:25,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:25,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:25,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:30,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:30,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:30,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:30,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:35,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:35,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:35,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:35,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:40,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:40,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:40,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:40,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:45,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:45,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:45,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:45,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:50,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:50,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:50,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:50,952 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:20:55,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:20:55,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:20:55,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:20:55,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:00,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:00,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:00,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:00,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:05,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:05,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:05,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:05,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:10,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:10,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:10,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:10,975 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:15,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:15,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:15,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:15,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:20,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:20,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:20,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:20,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:25,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:25,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:25,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:25,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:30,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:30,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:30,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:30,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:35,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:35,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:35,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:35,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:40,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:40,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:40,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:40,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:45,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:45,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:45,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:45,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:50,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:50,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:50,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:50,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:21:55,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:21:55,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:21:55,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:21:55,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:00,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:00,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:00,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:00,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:05,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:05,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:05,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:05,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:10,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:10,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:10,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:10,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:15,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:15,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:15,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:15,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:20,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:20,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:20,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:20,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:25,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:25,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:25,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:25,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:30,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:30,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:30,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:30,951 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:35,949 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:35,950 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:49014>: 'HEARTBEAT_PING  '
+2024-03-22 17:22:35,951 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:22:35,959 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:22:40,264 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:49014>: ''
+2024-03-22 17:22:40,264 ERROR [Thread-0] root: Server disconnected
+2024-03-22 17:22:40,950 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:49014
+2024-03-22 17:22:40,950 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:49014, server disconnected
+2024-03-22 17:22:40,962 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:49014 here
+2024-03-22 17:32:58,001 INFO  [main] root: Initializing ECS ...
+2024-03-22 17:32:58,004 INFO  [main] root: ECS listening on port: 7000
+2024-03-22 17:33:00,609 INFO  [main] root: Connected to localhost on port 42394
+2024-03-22 17:33:00,610 INFO  [Thread-0] root: Connection to server : /127.0.0.1 / 7000 established
+2024-03-22 17:33:00,611 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'REGISTER_SERVER 127.0.0.1 4000'
+2024-03-22 17:33:00,618 INFO  [Thread-0] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:00,619 INFO  [Thread-0] root: SEND 	<127.0.0.1:42394>: 'METADATA_UPDATE 204261742988058168372312762869324332712:127.0.0.1,4000,99ab61779bfb0faa85122ee2dd523ea8,99ab61779bfb0faa85122ee2dd523ea8; null'
+2024-03-22 17:33:00,619 INFO  [Thread-0] root: Handling added server here127.0.0.1:4000 here
+2024-03-22 17:33:03,006 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:03,008 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:42394>: 'HEARTBEAT_PING  '
+2024-03-22 17:33:03,009 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:33:03,010 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:33:08,005 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:08,006 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:42394>: 'HEARTBEAT_PING  '
+2024-03-22 17:33:08,007 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:33:08,007 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:33:13,005 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:13,005 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:42394>: 'HEARTBEAT_PING  '
+2024-03-22 17:33:13,006 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:33:13,006 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:33:18,005 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:18,006 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:42394>: 'HEARTBEAT_PING  '
+2024-03-22 17:33:18,007 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:33:18,007 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:33:23,005 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:23,006 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:42394>: 'HEARTBEAT_PING  '
+2024-03-22 17:33:23,007 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:33:23,007 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:33:28,005 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:28,006 INFO  [pool-1-thread-1] root: SEND 	<127.0.0.1:42394>: 'HEARTBEAT_PING  '
+2024-03-22 17:33:28,007 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: 'HEARTBEAT_REPLY  '
+2024-03-22 17:33:28,007 INFO  [Thread-0] root: Server127.0.0.1:4000responded to heartbeat ping
+2024-03-22 17:33:29,328 INFO  [Thread-0] root: RECEIVE 	<127.0.0.1:42394>: ''
+2024-03-22 17:33:29,329 ERROR [Thread-0] root: Server disconnected
+2024-03-22 17:33:33,005 INFO  [pool-1-thread-1] root: Sending message to server : 127.0.0.1:42394
+2024-03-22 17:33:33,006 INFO  [pool-1-thread-1] root: Failed sending message to server 127.0.0.1:42394, server disconnected
+2024-03-22 17:33:33,006 INFO  [pool-1-thread-1] root: Handling server removal here127.0.0.1:42394 here

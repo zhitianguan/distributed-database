@@ -328,12 +328,29 @@ public class ConnectionManager extends Thread {
 				System.out.println("Last server, saving disk for persistence");
 				this.shuttingDown = true;
 				break;
-			default:
+			case HEARTBEAT_PING:
+				replyHeartbeat();
+				break;
+			case COORDINATOR:
+				//ecs sets this server as coordinator
+				break;
+			case REPLICA_1:
+				//ecs sets this server as replica1
+				break;
+			case REPLICA_2:
+				//ecs sets this server as replica2
+				break;
+		default:
 				System.out.println("Error Handling message from ECS:" + msg.getStringMessage());
 				break;
 		}
 
 	} 
+
+	public void replyHeartbeat(){
+		Message msg = new Message("", "", KVMessage.StatusType.HEARTBEAT_REPLY);
+		sendMessageSafe(msg);
+	}
 
 	public void sendMapToECS(TreeMap<String,String> KVs){
 		for (Map.Entry<String, String> entry : KVs.entrySet()){
