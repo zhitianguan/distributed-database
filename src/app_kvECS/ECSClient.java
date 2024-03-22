@@ -339,9 +339,9 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
 
         }
 
-        //sendToClient(targetCoordinator, KVMessage.statusType.Coordinator);
-        //sendToClient(targetReplica1,KVMessage.statusType.REPLICA_1);
-        //sendToClient(targetReplica2,KvMessage.statusType.REPLICA_2);
+        //sendToClient(targetCoordinator, new Message('CoordinatorServer','',KVMessage.statusType.Coordinator));
+        //sendToClient(targetReplica1, new Message('CoordinatorServer','',KVMessage.statusType.REPLICA_1));
+        //sendToClient(targetReplica2,new Message('CoordinatorServer','',KVMessage.statusType.REPLICA_2));
     }
 
     public void sendHeartbeat(){
