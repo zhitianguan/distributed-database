@@ -28,6 +28,11 @@ import shared.messages.KVMessage;
 import shared.messages.Message;
 import shared.messages.KVMessage.StatusType;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+
 public class ECSClient implements IECSClient,Runnable {  
 
     private static Logger logger = Logger.getRootLogger();
@@ -37,9 +42,11 @@ public class ECSClient implements IECSClient,Runnable {
     private InetAddress inetAddress;
     private ServerSocket serverSocket;
     private boolean running;
+    private boolean shouldSendHeartbeat = true;
     private ECSNode dataTransferTarget;
 
     private static ECSClient instance;
+
 
     
     //ordered mapping: key is end Idx of server, value is ECSNode object
@@ -47,8 +54,30 @@ public class ECSClient implements IECSClient,Runnable {
 
     private List<ClientConnection> clientConnections = new CopyOnWriteArrayList<>();
     private Socket client;
+    private ScheduledExecutorService heartbeatScheduler;
 
-    
+    public enum ReplicaEventType{
+        SERVER_ADDED,
+        SERVER_DISCONNECTED,
+    }
+
+    public void scheduleHeartbeat() {
+        heartbeatScheduler = Executors.newSingleThreadScheduledExecutor();
+        heartbeatScheduler.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                if (shouldSendHeartbeat){ //we can change this variable if we don't want to send heartbeat for a certain event
+                    try {
+                        sendHeartbeat();
+                    } catch (Exception e) {
+                        logger.error("Error during heartbeat", e);
+                    }
+                }
+            }
+        }, 5, 5, TimeUnit.SECONDS);
+    }
+
+
     public ECSClient(String address,int port){
         this.address = address;
         this.port = port;
@@ -90,7 +119,7 @@ public class ECSClient implements IECSClient,Runnable {
     @Override
     public boolean start() {
         running = initializeServer();
-
+        scheduleHeartbeat();
         if (serverSocket != null){
             while(isRunning()){
                 try{
@@ -104,6 +133,7 @@ public class ECSClient implements IECSClient,Runnable {
                     ClientConnection connection = new ClientConnection(client, ECSClient.getInstance(address, port));
                     this.addConnectionThread(connection); //instance is the object we want to always keep updating. This is the "shared" ecs object by all connections
 
+                    
                     new Thread(connection).start();
                                         
 
@@ -120,11 +150,13 @@ public class ECSClient implements IECSClient,Runnable {
 
             }
         }
+
         try{
             serverSocket.close();
         } catch (IOException e) {
             logger.error("Error! " + "Unable to close socket connection to server");
         }
+
 
         return false;
     }
@@ -138,6 +170,10 @@ public class ECSClient implements IECSClient,Runnable {
     @Override
     public boolean shutdown() {
         running = false;
+        if (heartbeatScheduler!=null && heartbeatScheduler.isShutdown() == false){
+            heartbeatScheduler.shutdown();
+
+        }
         return false;
     }
 
@@ -282,6 +318,50 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
 }
 
 
+    public void handleReplicaLogic(String clientAddress,ReplicaEventType type){
+
+        String targetCoordinator = "";
+        String targetReplica1 = "";
+        String targetReplica2 = "";
+
+        switch (type){
+
+            case SERVER_DISCONNECTED:
+                logger.info("Handling server removal here" + clientAddress + " here");
+                //do some logic here to find the targets?
+                break;
+            case SERVER_ADDED:
+                logger.info("Handling added server here" + clientAddress + " here");
+                //do some logic here to find the targets?
+                break;
+            default:
+                break;
+
+        }
+
+        //sendToClient(targetCoordinator, new Message('CoordinatorServer','',KVMessage.statusType.Coordinator));
+        //sendToClient(targetReplica1, new Message('CoordinatorServer','',KVMessage.statusType.REPLICA_1));
+        //sendToClient(targetReplica2,new Message('CoordinatorServer','',KVMessage.statusType.REPLICA_2));
+    }
+
+    public void sendHeartbeat(){
+        Message message = new Message("", "", KVMessage.StatusType.HEARTBEAT_PING);
+        for (ClientConnection clientConnection : clientConnections) {
+            Socket socket = clientConnection.getClientSocket();
+            String currentClientAddress = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+            logger.info("Sending message to server : " + currentClientAddress);
+            try{
+                clientConnection.sendMessage(message); //we want to catch error here, so don't use sendSafe 
+            }
+            catch (Exception e){
+                logger.info("Failed sending message to server "+ currentClientAddress + ", server disconnected");
+                handleReplicaLogic(currentClientAddress,ReplicaEventType.SERVER_DISCONNECTED);
+                //removeNodes() call the regular removenodes logic here
+                this.clientConnections.remove(clientConnection);
+            }
+        }
+    }
+
 
     public void printMetaData() {
         if (metadata.isEmpty()) {
@@ -361,8 +441,6 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
                 }
 
             }
-
-
 
 
             // Send metadata update message to all clients

@@ -17,6 +17,7 @@ import shared.messages.KVMessage;
 import shared.messages.Message;
 import shared.messages.KVMessage.StatusType;
 
+import app_kvECS.ECSClient.ReplicaEventType;
 
 //Facilitates the connection to servers (they act as clients to the ECS) 
 
@@ -308,6 +309,10 @@ public class ClientConnection implements Runnable{
 						this.ecsClient.sendToClient(this.successorAdd, transferComplete);
 					}
 					break;
+				case HEARTBEAT_REPLY:
+					logger.info("Server" + this.serverAddress + ":" + this.serverPort +  "responded to heartbeat ping");
+					//we don't have to do anything here
+					break;
 				default:
 					sendMessageSafe(new Message("error",null,KVMessage.StatusType.FAILED)); //todo: return error string, technically it won't reach here
 					break;
@@ -345,6 +350,7 @@ public class ClientConnection implements Runnable{
 		this.serverPort =  Integer.parseInt(serverPort);;
 
 		this.ecsClient.addNode(this.serverAddress, this.serverPort,"default caching strat", 0);
+		this.ecsClient.handleReplicaLogic(this.serverAddress+":"+this.serverPort, ReplicaEventType.SERVER_ADDED);
 
 	}
 

@@ -63,7 +63,11 @@ public class KVServer implements IKVServer, Runnable {
     private TreeMap<BigInteger, ECSNode> metadata = new TreeMap<>();
 
 
-	
+	public enum ServerRole{ //create an attribute to store current role of server maybe?
+		COORDINATOR,
+		REPLICA_1,
+		REPLICA_2
+	}
 
 	/**
 	 * Start KV Server at given port
@@ -89,10 +93,12 @@ public class KVServer implements IKVServer, Runnable {
 		this.ecsPort = ecsPort;
 	}
 
+
 	public KVServer(int port, int cacheSize, String strategy) {
 		this("127.0.0.1", port, "", cacheSize, strategy,"",0); // Default address is localhost
 	}
 	
+
 	
 	@Override
 	public int getPort(){
