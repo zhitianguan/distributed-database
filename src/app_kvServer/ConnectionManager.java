@@ -386,6 +386,7 @@ public class ConnectionManager extends Thread {
 				break;
 			case INSERT_REPLICA_1:
 				//insert replica 1 to disk
+				logger.info("Inserting replica 1 into disk");
 				this.KVServerInstance.disk.insertReplicaIntoDisk(1);
 				this.KVServerInstance.disk.deleteReplica(1);
 				this.updateAllReplicas = true;

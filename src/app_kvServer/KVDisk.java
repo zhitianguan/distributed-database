@@ -251,6 +251,7 @@ public class KVDisk {
 
     public void insertReplicaIntoDisk(int replicaNum){
         //case where a server shutsdown and we use the replica to restore, should probably also add code to delete the replica or at least remove all KVs
+        //System.out.println("Inserting Replica into disk");
         if(replicaNum == 1 || replicaNum == 2){
             if(replicaExists(replicaNum)){
                 String replicaPath;
@@ -259,15 +260,18 @@ public class KVDisk {
                 } else{
                     replicaPath = this.KVReplicaTwoPath;
                 }
+                //System.out.println("Replica is at this file path:" + replicaPath);
                 File replicaFolder = new File(replicaPath);
                 File[] listOfFiles = replicaFolder.listFiles();
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile()) {
                         try{
                             String key = listOfFiles[i].getName();
+                            key = key.substring(0, key.length() - 4);
                             BufferedReader buffReader = new BufferedReader(new FileReader (listOfFiles[i]));
                             String value = buffReader.readLine();
                             buffReader.close();
+                            System.out.println("Inserting KV:" + key + value + "into disk");
                             diskPutKV(key, value);
                         } catch (IOException e){
                             System.out.println("Error reading/transferring from replica to disk");
