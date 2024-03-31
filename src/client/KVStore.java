@@ -77,7 +77,6 @@ public class KVStore extends Thread implements KVCommInterface {
 
 		this.start();
 
-
 	}
 
 	@Override
@@ -216,12 +215,16 @@ public class KVStore extends Thread implements KVCommInterface {
 
 	}
 
-	public KVMessage requestMetadata() throws Exception{
-
+	public KVMessage requestMetadata(boolean keyrange_read) throws Exception{
 		KVMessage message = null;
-		
 		try{
-			sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE));			
+			if (!keyrange_read) {
+				sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE));
+				
+			} else {
+				sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE_READ));	
+			}
+				
 			while (true){
 				try{
 				message = receiveMessage();
@@ -229,7 +232,11 @@ public class KVStore extends Thread implements KVCommInterface {
 				if (message == null){
 					boolean retry = handleServerDisconnected();	
 					if (retry){
-						sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE));			
+						if (!keyrange_read) {
+							sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE));	
+						} else {
+							sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE_READ));	
+						}
 					}
 					else{
 						throw new Exception("Server is disconnected and metadata is empty");					
