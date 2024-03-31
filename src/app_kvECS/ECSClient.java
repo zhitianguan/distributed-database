@@ -56,6 +56,8 @@ public class ECSClient implements IECSClient,Runnable {
     private Socket client;
     private ScheduledExecutorService heartbeatScheduler;
 
+    private Exception errorOccured = null;
+
     public enum ReplicaEventType{
         SERVER_ADDED,
         SERVER_DISCONNECTED,
@@ -145,7 +147,9 @@ public class ECSClient implements IECSClient,Runnable {
                 }
                 catch (IOException e) {
 	            	logger.error("Error! " +
-	            			"Unable to establish connection. \n", e);
+                            "Unable to establish connection. \n", e);
+                    this.errorOccured = e;
+                            
 	            }
 
             }
@@ -159,6 +163,10 @@ public class ECSClient implements IECSClient,Runnable {
 
 
         return false;
+    }
+
+    public Exception getError(){
+        return this.errorOccured;
     }
 
     @Override
