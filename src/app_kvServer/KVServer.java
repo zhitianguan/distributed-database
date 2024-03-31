@@ -51,23 +51,21 @@ public class KVServer implements IKVServer, Runnable {
 	
 	private static KVServer instance;
 	private KVCache cache;
-	private KVDisk disk;
+	public KVDisk disk;
 	private int writeLock;
 
 	private String ecsAddress;
 	private int ecsPort;
+
+	public boolean newKVPut;
+	public String newKVKey;
+	public String newKVValue;
 	
 
 
 	//ordered mapping: key is end Idx of server, value is ECSNode object
     private TreeMap<BigInteger, ECSNode> metadata = new TreeMap<>();
 
-
-	public enum ServerRole{ //create an attribute to store current role of server maybe?
-		COORDINATOR,
-		REPLICA_1,
-		REPLICA_2
-	}
 
 	/**
 	 * Start KV Server at given port
@@ -493,6 +491,40 @@ public KVMessage getKV(String key) throws Exception {
 
 		return false;
 	}
+	public int getMetaDataSize(){
+		return this.metadata.size();
+	}
+
+	//helper functions which find the server's replica1/2 address, returns the full address as a string or null if there is no replica
+	public String getReplicaAddress(int replicaNum){
+		String replicaAddress = null;
+		if(getMetaDataSize() >= 2){
+			for (Map.Entry<BigInteger, ECSNode> entry : metadata.entrySet()) {
+				ECSNode node = entry.getValue();
+				if (node.getNodeHost().equals(this.address) && node.getNodePort() == this.port) {
+					Map.Entry<BigInteger, ECSNode> replica = metadata.higherEntry(entry.getKey());
+					if(replica == null){
+						replica = metadata.firstEntry();
+					}
+					if(replicaNum == 1){
+						ECSNode replicaNode = replica.getValue();
+						replicaAddress = replicaNode.getNodeHost() + ":" + replicaNode.getNodePort();
+						return replicaAddress;
+					} else if (getMetaDataSize() >= 3 && replicaNum == 2){
+						replica = metadata.higherEntry(replica.getKey());
+						if(replica == null){
+							replica = metadata.firstEntry();
+						}
+						ECSNode replicaNode = replica.getValue();
+						replicaAddress = replicaNode.getNodeHost() + ":" + replicaNode.getNodePort();
+						return replicaAddress;
+					}
+				}
+			}
+		}
+		return replicaAddress;
+	}
+
 	private String bigIntegerToString(BigInteger input){
         String output = input.toString(16);
         //need to zero pad it if necessary to get the full 32 chars

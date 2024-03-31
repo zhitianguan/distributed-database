@@ -256,6 +256,7 @@ public class KVStore extends Thread implements KVCommInterface {
 			}
 			}
 			this.metadata = ConnectionManager.stringToMetadata(message.getKey());
+			message = new Message(metadataToStringForKeyRange(), null, KVMessage.StatusType.KEYRANGE_SUCCESS);
 			return message;
 		}
 		catch(Exception e){
@@ -485,6 +486,24 @@ public void connectToNewServer(boolean pickAnyServer, String key) {
 
 		return msg;
 	}
+
+	public String metadataToStringForKeyRange() {
+		
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<BigInteger, ECSNode> entry : metadata.entrySet()) {
+            String key = entry.getValue().getNodeHost() + ":" + entry.getValue().getNodePort();
+            ECSNode node = entry.getValue();
+            sb.append(node.getStartingHashIdx());
+            sb.append(",");
+            sb.append(node.getEndingHashIdx());
+            sb.append(",");
+            sb.append(key.toString());
+            sb.append(";");
+        }
+        return sb.toString();
+    }
+
+	
 	
 
 }

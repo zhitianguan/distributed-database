@@ -234,10 +234,15 @@ public class KVDisk {
         //case where a key is added to another server and that server coordinates its replicas by sending the new KV
         try{
             String filePath = getReplicaPath(key, replicaNum);
-            FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(value);
-            fileWriter.flush();
-            fileWriter.close();
+            if(value == null){ //case where KV is deleted
+                File file = new File(filePath);
+                file.delete();
+            } else{
+                FileWriter fileWriter = new FileWriter(filePath);
+                fileWriter.write(value);
+                fileWriter.flush();
+                fileWriter.close();
+            }
         } catch (IOException e){
             System.out.println("Error inserting new KV pair into Replica");
             //not sure if this replaces file or appends (if appends will prob have to check if file exists delete file and then call FileWriter, for KV update case)
@@ -246,6 +251,7 @@ public class KVDisk {
 
     public void insertReplicaIntoDisk(int replicaNum){
         //case where a server shutsdown and we use the replica to restore, should probably also add code to delete the replica or at least remove all KVs
+        //System.out.println("Inserting Replica into disk");
         if(replicaNum == 1 || replicaNum == 2){
             if(replicaExists(replicaNum)){
                 String replicaPath;
@@ -254,15 +260,18 @@ public class KVDisk {
                 } else{
                     replicaPath = this.KVReplicaTwoPath;
                 }
+                //System.out.println("Replica is at this file path:" + replicaPath);
                 File replicaFolder = new File(replicaPath);
                 File[] listOfFiles = replicaFolder.listFiles();
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile()) {
                         try{
                             String key = listOfFiles[i].getName();
+                            key = key.substring(0, key.length() - 4);
                             BufferedReader buffReader = new BufferedReader(new FileReader (listOfFiles[i]));
                             String value = buffReader.readLine();
                             buffReader.close();
+                            System.out.println("Inserting KV:" + key + value + "into disk");
                             diskPutKV(key, value);
                         } catch (IOException e){
                             System.out.println("Error reading/transferring from replica to disk");
@@ -289,10 +298,9 @@ public class KVDisk {
                     this.KVReplicaTwoPath = null;
                 }
                 File replicaFolder = new File(replicaPath);
-                File[] listOfFiles = replicaFolder.listFiles();
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    if (listOfFiles[i].isFile()) {
-                        listOfFiles[i].delete();
+                for(File file: replicaFolder.listFiles()){
+                    if (!file.isDirectory()){ 
+                        file.delete();
                     }
                 }
                 //delete folder here
