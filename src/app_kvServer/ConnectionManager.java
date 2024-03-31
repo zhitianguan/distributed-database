@@ -359,6 +359,8 @@ public class ConnectionManager extends Thread {
 					} else{
 						System.out.println("No data transfer necessary");
 					}
+					//delete replicas once done
+					this.KVServerInstance.disk.deleteReplicas();
 					//delete disk once done 
 					this.KVServerInstance.clearStorage();
 					System.out.println("Deleting disk");
