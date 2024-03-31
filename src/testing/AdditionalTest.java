@@ -305,7 +305,7 @@ public class AdditionalTest extends TestCase {
 		assertTrue (ex == null);
 
 		try{
-			message = kvClient.requestMetadata();
+			message = kvClient.requestMetadata(false);
 		}
 		catch(Exception e){
 			ex = e;

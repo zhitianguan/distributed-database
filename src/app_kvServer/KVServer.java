@@ -344,17 +344,56 @@ public KVMessage getKV(String key) throws Exception {
 		return this.metadata;
 	}
 
-	public String metadataToStringForKeyRange() {
-		
+	public String metadataToStringForKeyRange(boolean keyrange_read) {		
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<BigInteger, ECSNode> entry : this.metadata.entrySet()) {
-            String key = entry.getValue().getNodeHost() + ":" + entry.getValue().getNodePort();
             ECSNode node = entry.getValue();
+            String key = node.getNodeHost() + ":" + node.getNodePort();
             sb.append(node.getStartingHashIdx());
             sb.append(",");
             sb.append(node.getEndingHashIdx());
             sb.append(",");
-            sb.append(key.toString());
+            sb.append(key);
+
+			if (keyrange_read) {
+				sb.append(",");
+
+				// Finding and updating the 1st successor
+				Map.Entry<BigInteger, ECSNode> higherEntry = this.metadata.higherEntry(new BigInteger(node.getEndingHashIdx(), 16));
+
+				ECSNode successor1;
+				if (higherEntry == null) {
+					successor1 = this.metadata.firstEntry().getValue();
+				} else {
+					successor1 = higherEntry.getValue();
+				}
+				String key1 = successor1.getNodeHost() + ":" + successor1.getNodePort();
+
+
+				sb.append(key1);
+				sb.append(",");
+
+
+
+
+				// Finding and updating the 2nd successor
+				Map.Entry<BigInteger, ECSNode> higherEntry2 = this.metadata.higherEntry(new BigInteger(successor1.getEndingHashIdx(), 16));
+
+				
+				
+				ECSNode successor2;
+				if (higherEntry2 == null) {
+					successor2 = this.metadata.firstEntry().getValue();
+				} else {
+					successor2 = higherEntry2.getValue();
+				}
+
+
+				String key2 = successor2.getNodeHost() + ":" + successor2.getNodePort();
+
+				sb.append(key2);
+        	}	
+
             sb.append(";");
         }
         return sb.toString();

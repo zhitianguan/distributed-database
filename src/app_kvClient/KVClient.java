@@ -163,11 +163,21 @@ public class KVClient implements IKVClient {
 
 			if (store != null){
 				try{
-					KVMessage receivedMessage = store.requestMetadata();
+					KVMessage receivedMessage = store.requestMetadata(false);
 					this.handleNewMessage(receivedMessage);
 				}
 				catch(Exception e){
 					logger.error("Failed to send KEYRANGE message to server" + e.getMessage());
+				}
+			}
+		} else if (tokens[0].equals("keyrange_read")){
+			if (store != null){
+				try{
+					KVMessage receivedMessage = store.requestMetadata(true);
+					this.handleNewMessage(receivedMessage);
+				}
+				catch(Exception e){
+					logger.error("Failed to send KEYRANGE_READ message to server" + e.getMessage());
 				}
 			}
 		}

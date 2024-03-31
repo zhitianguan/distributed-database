@@ -275,16 +275,12 @@ public class ClientConnection implements Runnable {
 	private void handleRequest(Message latestMessage){
 		//request format: <command> <requestData> 
 		try{
-
 			KVMessage.StatusType command = latestMessage.getStatus();
-		
 			String key = latestMessage.getKey();
-
-			if (key == null && command != KVMessage.StatusType.KEYRANGE){
+			if (key == null && (command != KVMessage.StatusType.KEYRANGE || command != KVMessage.StatusType.KEYRANGE_READ) ){
 				sendMessageSafe(new Message("error","- key not provided",KVMessage.StatusType.FAILED)); //INVALID_PARAMETER
 				return;
 			}
-
 			switch (command){
 				case GET :
 					handleGet(key);
@@ -299,6 +295,9 @@ public class ClientConnection implements Runnable {
 					break;
 				case KEYRANGE :
 					sendMessageSafe(new Message(kvServer.metadataToString(),"\r\n", KVMessage.StatusType.KEYRANGE_SUCCESS));
+					break;
+				case KEYRANGE_READ:
+					sendMessageSafe(new Message(kvServer.metadataToStringForKeyRange(true),"\r\n", KVMessage.StatusType.KEYRANGE_READ_SUCCESS));
 					break;
 				default:
 					sendMessageSafe(new Message("error",null,KVMessage.StatusType.FAILED)); //todo: return error string, technically it won't reach here
