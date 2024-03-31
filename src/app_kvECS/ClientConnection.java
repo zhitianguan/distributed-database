@@ -43,6 +43,8 @@ public class ClientConnection implements Runnable{
 
 	private String successor;
 	private String successorAdd;
+	private String replica1Addr;
+	private String replica2Addr;
 	private boolean shuttingDown;
 
 
@@ -242,10 +244,11 @@ public class ClientConnection implements Runnable{
 				return msg;
 			}
 
-			if (command == KVMessage.StatusType.REGISTER_SERVER || command == KVMessage.StatusType.DATA_TRANSFER){
+			if (command == KVMessage.StatusType.REGISTER_SERVER || command == KVMessage.StatusType.DATA_TRANSFER  || command == KVMessage.StatusType.REPLICA_1 || command == KVMessage.StatusType.REPLICA_2){
+				
 				key = msgRequest[1];
 				value = msgRequest[2];
-			} else if (command == KVMessage.StatusType.DATA_TRANSFER_START && this.shuttingDown == false){
+			} else if ((command == KVMessage.StatusType.DATA_TRANSFER_START && this.shuttingDown == false) || command == KVMessage.StatusType.NEW_REPLICA_1 || command == KVMessage.StatusType.NEW_REPLICA_2 || command == KVMessage.StatusType.REPLICA_1_DEST || command == KVMessage.StatusType.REPLICA_2_DEST){
 				key = msgRequest[1];
 			}
 
@@ -313,6 +316,36 @@ public class ClientConnection implements Runnable{
 					logger.info("Server" + this.serverAddress + ":" + this.serverPort +  "responded to heartbeat ping");
 					//we don't have to do anything here
 					break;
+				case NEW_REPLICA_1:
+					logger.info(latestMessage.getStringMessage());
+					this.replica1Addr = latestMessage.getKey();
+					logger.info("Replica 1 Destination:" + this.replica1Addr);
+					Message newRep1Msg = new Message(null, null, KVMessage.StatusType.NEW_REPLICA_1);
+					this.ecsClient.sendToClient(this.replica1Addr, newRep1Msg);
+					break;
+				case NEW_REPLICA_2:
+					this.replica2Addr = latestMessage.getKey();
+					Message newRep2Msg = new Message(null, null, KVMessage.StatusType.NEW_REPLICA_2);
+					this.ecsClient.sendToClient(this.replica2Addr, newRep2Msg);
+					break;
+				case REPLICA_1_DEST:
+					this.replica1Addr = latestMessage.getKey();
+					break;
+				case REPLICA_2_DEST:
+					this.replica2Addr = latestMessage.getKey();
+					break;
+				case REPLICA_1:
+					String rep1key = latestMessage.getKey();
+					String rep1value = latestMessage.getValue();
+					Message kvRep1 = new Message(rep1key, rep1value, KVMessage.StatusType.REPLICA_1);
+					this.ecsClient.sendToClient(this.replica1Addr, kvRep1);
+					break;
+				case REPLICA_2:
+					String rep2key = latestMessage.getKey();
+					String rep2value = latestMessage.getValue();
+					Message kvRep2 = new Message(rep2key, rep2value, KVMessage.StatusType.REPLICA_2);
+					this.ecsClient.sendToClient(this.replica2Addr, kvRep2);
+					break;
 				default:
 					sendMessageSafe(new Message("error",null,KVMessage.StatusType.FAILED)); //todo: return error string, technically it won't reach here
 					break;
@@ -337,6 +370,8 @@ public class ClientConnection implements Runnable{
 		String name = this.serverAddress + ":" + this.serverPort;
 		nodeNames.add(name);
 
+		//replica logic
+		this.ecsClient.handleReplicaLogic(name ,ReplicaEventType.SERVER_SHUTDOWN);
 
 		//logic of removing server
 		this.ecsClient.removeNodes(nodeNames);
@@ -349,8 +384,8 @@ public class ClientConnection implements Runnable{
 		this.serverAddress = serverAddress;
 		this.serverPort =  Integer.parseInt(serverPort);;
 
-		this.ecsClient.addNode(this.serverAddress, this.serverPort,"default caching strat", 0);
 		this.ecsClient.handleReplicaLogic(this.serverAddress+":"+this.serverPort, ReplicaEventType.SERVER_ADDED);
+		this.ecsClient.addNode(this.serverAddress, this.serverPort,"default caching strat", 0);
 
 	}
 
