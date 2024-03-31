@@ -495,7 +495,7 @@ public class AdditionalTest extends TestCase {
 
 
 	@Test 
-	public void GettingFromReplica(){
+	public void GettingFromReplica(){ //server dies, get from replica server
 		Exception ex = null;
 		String ecsAddress = "127.8.8.8";
 		int ecsPort = 2011;
@@ -542,12 +542,49 @@ public class AdditionalTest extends TestCase {
 
 	}
 
+	@Test
+	public void multipleServersKilled(){
+		Exception ex = null;
+		String ecsAddress = "127.7.7.7";
+		int ecsPort = 2011;
+		KVMessage message = null;
+
+		ECSClient ecsServer = new ECSClient(ecsAddress,ecsPort);
+
+		KVServer kvServerOne = new KVServer("127.0.0.3",9023, "dir1", 100,"default", ecsAddress, ecsPort);
+		KVServer kvServerTwo = new KVServer("127.0.0.3",9024, "dir2", 100, "default", ecsAddress, ecsPort);
 
 
+		try{
+			new Thread(ecsServer).start();
+			Thread.sleep(1000);
+			new Thread(kvServerOne).start();
+			Thread.sleep(1000);
+			new Thread (kvServerTwo).start();
+			Thread.sleep(1000);
+
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+		assertTrue (ex == null);
+
+		try{
+			kvServerOne.close();
+			kvServerTwo.close();
+		}
+		catch(Exception e){
+			ex = e;
+		}
 
 
+		assertTrue (ex == null);
+		assertTrue (ecsServer.getError() == null);
 
+		ecsServer.stop();
 
+	}
 
 }
 
