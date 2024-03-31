@@ -244,10 +244,11 @@ public class ClientConnection implements Runnable{
 				return msg;
 			}
 
-			if (command == KVMessage.StatusType.REGISTER_SERVER || command == KVMessage.StatusType.DATA_TRANSFER){
+			if (command == KVMessage.StatusType.REGISTER_SERVER || command == KVMessage.StatusType.DATA_TRANSFER  || command == KVMessage.StatusType.REPLICA_1 || command == KVMessage.StatusType.REPLICA_2){
+				
 				key = msgRequest[1];
 				value = msgRequest[2];
-			} else if (command == KVMessage.StatusType.DATA_TRANSFER_START && this.shuttingDown == false){
+			} else if ((command == KVMessage.StatusType.DATA_TRANSFER_START && this.shuttingDown == false) || command == KVMessage.StatusType.NEW_REPLICA_1 || command == KVMessage.StatusType.NEW_REPLICA_2 || command == KVMessage.StatusType.REPLICA_1_DEST || command == KVMessage.StatusType.REPLICA_2_DEST){
 				key = msgRequest[1];
 			}
 
@@ -316,6 +317,7 @@ public class ClientConnection implements Runnable{
 					//we don't have to do anything here
 					break;
 				case NEW_REPLICA_1:
+					logger.info(latestMessage.getStringMessage());
 					this.replica1Addr = latestMessage.getKey();
 					logger.info("Replica 1 Destination:" + this.replica1Addr);
 					Message newRep1Msg = new Message(null, null, KVMessage.StatusType.NEW_REPLICA_1);

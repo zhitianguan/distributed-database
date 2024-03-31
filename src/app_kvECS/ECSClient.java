@@ -338,6 +338,7 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
                 //send message to move replica1 into server's disk
                 Message insertReplica1 = new Message(null, null, KVMessage.StatusType.INSERT_REPLICA_1);
                 //need to find a way to track whether or not the client receives the message for case where two subsequent servers are dropped
+                logger.info("Sending insert replica to address : " + replicaAddress);
                 this.sendToClient(replicaAddress, insertReplica1);
                 //if (message not sent){}
                 
@@ -416,7 +417,8 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
         Message message = new Message("", "", KVMessage.StatusType.HEARTBEAT_PING);
         for (ClientConnection clientConnection : clientConnections) {
             Socket socket = clientConnection.getClientSocket();
-            String currentClientAddress = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+            //String currentClientAddress = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+            String currentClientAddress = clientConnection.getServerAddress() + ":" + clientConnection.getServerPort();
             logger.info("Sending message to server : " + currentClientAddress);
             try{
                 clientConnection.sendMessage(message); //we want to catch error here, so don't use sendSafe 

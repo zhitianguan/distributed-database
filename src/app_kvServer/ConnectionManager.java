@@ -279,6 +279,7 @@ public class ConnectionManager extends Thread {
 						Message target = new Message(this.dataTransferTarget, null, KVMessage.StatusType.DATA_TRANSFER_START);
 						sendMessageSafe(target);
 						if (KVtransfers.size() != 0){
+							this.updateAllReplicas = true;
 							sendMapToECS(KVtransfers);
 						} else{
 							logger.info("No data found to be transferred");
