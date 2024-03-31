@@ -298,7 +298,7 @@ public class ClientConnection implements Runnable {
 					}
 					break;
 				case KEYRANGE :
-					sendMessageSafe(new Message(kvServer.metadataToStringForKeyRange(),"\r\n", KVMessage.StatusType.KEYRANGE_SUCCESS));
+					sendMessageSafe(new Message(kvServer.metadataToString(),"\r\n", KVMessage.StatusType.KEYRANGE_SUCCESS));
 					break;
 				default:
 					sendMessageSafe(new Message("error",null,KVMessage.StatusType.FAILED)); //todo: return error string, technically it won't reach here
