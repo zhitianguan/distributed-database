@@ -18,6 +18,7 @@ import app_kvServer.ConnectionManager;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.ArrayList;
 import java.math.BigInteger;
 import java.security.*;
 
@@ -58,8 +59,8 @@ public class KVServer implements IKVServer, Runnable {
 	private int ecsPort;
 
 	public boolean newKVPut;
-	public String newKVKey;
-	public String newKVValue;
+	public ArrayList<String> newKVKey;
+	public ArrayList<String> newKVValue;
 	
 
 
@@ -89,6 +90,8 @@ public class KVServer implements IKVServer, Runnable {
 		this.writeLock = 0;
 		this.ecsAddress = ecsAddress;
 		this.ecsPort = ecsPort;
+		this.newKVKey = new ArrayList<String>();
+		this.newKVValue = new ArrayList<String>();
 	}
 
 

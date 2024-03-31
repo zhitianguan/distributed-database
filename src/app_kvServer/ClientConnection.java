@@ -359,8 +359,8 @@ public class ClientConnection implements Runnable {
 					logger.info("Removed key:" + key);
 					sendMessageSafe(new Message(key,null,KVMessage.StatusType.DELETE_SUCCESS)); 
 					this.kvServer.newKVPut = true;
-					this.kvServer.newKVKey = key;
-					this.kvServer.newKVValue = null;
+					this.kvServer.newKVKey.add(key);
+					this.kvServer.newKVValue.add(null);
 				} else{
 					logger.info("Key :" + key + " value not found");
 					sendMessageSafe(new Message(key,null,KVMessage.StatusType.DELETE_ERROR)); 
@@ -379,8 +379,8 @@ public class ClientConnection implements Runnable {
 		try{
 			this.kvServer.putKV(key,value);
 			this.kvServer.newKVPut = true;
-			this.kvServer.newKVKey = key;
-			this.kvServer.newKVValue = value;
+			this.kvServer.newKVKey.add(key);
+			this.kvServer.newKVValue.add(value);
 			if (keyFound){ //update
 				sendMessageSafe(new Message(key,value,KVMessage.StatusType.PUT_UPDATE));
 				logger.info("Updated value of key :" + key + " to " + value);

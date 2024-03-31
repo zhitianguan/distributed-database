@@ -264,7 +264,6 @@ public class ConnectionManager extends Thread {
 		switch (msgType){
 			case METADATA_UPDATE:
 				KVServerInstance.setMetaData (stringToMetadata(msg.getKey()));
-
 				if (KVServerInstance.getMetaData().isEmpty()) {
 					System.out.println("Metadata is empty. No ECS nodes are currently in the system.");
 				} else {
@@ -377,10 +376,13 @@ public class ConnectionManager extends Thread {
 				replyHeartbeat();
 				//send KV update if needed
 				if(this.KVServerInstance.newKVPut){
-					String newKey = this.KVServerInstance.newKVKey;
-					String newValue = this.KVServerInstance.newKVValue;
-					send1KVtoReplicas(newKey, newValue);
-					this.KVServerInstance.newKVPut = false;
+					if(this.prevNumServers > 1){
+						sendNewKVstoReplicas();	
+					} else {
+						this.KVServerInstance.newKVKey.clear();
+						this.KVServerInstance.newKVValue.clear();
+						this.KVServerInstance.newKVPut = false;
+					}			
 				}
 				break;
 			case UPDATE_REPLICAS:
@@ -447,19 +449,26 @@ public class ConnectionManager extends Thread {
 		sendMessageSafe(msg);
 	}
 
-	public void send1KVtoReplicas(String key, String value){
+	public void sendNewKVstoReplicas(){
 		if(this.prevNumServers > 1){ 
 			Message addr = new Message(this.KVServerInstance.getReplicaAddress(1), null, KVMessage.StatusType.REPLICA_1_DEST);
 			sendMessageSafe(addr);
-			Message kv = new Message(key, value, KVMessage.StatusType.REPLICA_1);
-			sendMessageSafe(kv);
+			for(int i = 0; i < this.KVServerInstance.newKVKey.size(); i++){
+				Message kv = new Message(this.KVServerInstance.newKVKey.get(i), this.KVServerInstance.newKVValue.get(i), KVMessage.StatusType.REPLICA_1);
+				sendMessageSafe(kv);
+			}
 		}
 		if(this.prevNumServers > 2){
 			Message addr = new Message(this.KVServerInstance.getReplicaAddress(2), null, KVMessage.StatusType.REPLICA_1_DEST);
 			sendMessageSafe(addr);
-			Message kv = new Message(key, value, KVMessage.StatusType.REPLICA_2);
-			sendMessageSafe(kv);
+			for(int i = 0; i < this.KVServerInstance.newKVKey.size(); i++){
+				Message kv = new Message(this.KVServerInstance.newKVKey.get(i), this.KVServerInstance.newKVValue.get(i), KVMessage.StatusType.REPLICA_2);
+				sendMessageSafe(kv);
+			}
 		}
+		this.KVServerInstance.newKVKey.clear();
+		this.KVServerInstance.newKVValue.clear();
+		this.KVServerInstance.newKVPut = false;
 	}
 
 	public void sendMapToECS(TreeMap<String,String> KVs){
