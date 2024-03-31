@@ -234,10 +234,15 @@ public class KVDisk {
         //case where a key is added to another server and that server coordinates its replicas by sending the new KV
         try{
             String filePath = getReplicaPath(key, replicaNum);
-            FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(value);
-            fileWriter.flush();
-            fileWriter.close();
+            if(value == null){ //case where KV is deleted
+                File file = new File(filePath);
+                file.delete();
+            } else{
+                FileWriter fileWriter = new FileWriter(filePath);
+                fileWriter.write(value);
+                fileWriter.flush();
+                fileWriter.close();
+            }
         } catch (IOException e){
             System.out.println("Error inserting new KV pair into Replica");
             //not sure if this replaces file or appends (if appends will prob have to check if file exists delete file and then call FileWriter, for KV update case)

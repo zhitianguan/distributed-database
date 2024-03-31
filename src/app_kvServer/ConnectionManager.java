@@ -50,6 +50,8 @@ public class ConnectionManager extends Thread {
 	private KVServer KVServerInstance;
 	private String dataTransferTarget;
 	private boolean shuttingDown;
+	private int prevNumServers;
+	private boolean updateAllReplicas;
 
 
 	public ConnectionManager(String address, int port, KVServer instance) {
@@ -58,6 +60,8 @@ public class ConnectionManager extends Thread {
 		this.KVServerInstance = instance;
 		this.dataTransferTarget = "";
 		this.shuttingDown = false;
+		this.prevNumServers = 0;
+		this.updateAllReplicas = false;
 		//listeners = new HashSet<KVServer>();
 		Runnable shutdownTask = new Runnable() {
 			@Override
@@ -259,33 +263,69 @@ public class ConnectionManager extends Thread {
 
 		switch (msgType){
 			case METADATA_UPDATE:
-         KVServerInstance.setMetaData (stringToMetadata(msg.getKey()));
+				KVServerInstance.setMetaData (stringToMetadata(msg.getKey()));
 
-         if (KVServerInstance.getMetaData().isEmpty()) {
-             System.out.println("Metadata is empty. No ECS nodes are currently in the system.");
-         } else {
-             System.out.println("Current KVServer Metadata:");
-             for (Map.Entry<BigInteger, ECSNode> entry : KVServerInstance.getMetaData().entrySet()) {
-                 ECSNode node = entry.getValue();
-                 node.printNodeDetails();
-             }
-             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-             if (this.dataTransferTarget != ""){ 
-                TreeMap<String, String> KVtransfers = this.KVServerInstance.getKVsToBeTransferred();
-                if (KVtransfers.size() != 0){
-                  Message target = new Message(this.dataTransferTarget, null, KVMessage.StatusType.DATA_TRANSFER_START);
-                  sendMessageSafe(target);
-                  sendMapToECS(KVtransfers);
-                  sendMessageSafe(new Message(null, null, KVMessage.StatusType.DATA_TRANSFER_COMPLETE));
-                } else{
-					logger.info("No data found to be transferred");
+				if (KVServerInstance.getMetaData().isEmpty()) {
+					System.out.println("Metadata is empty. No ECS nodes are currently in the system.");
+				} else {
+					System.out.println("Current KVServer Metadata:");
+					for (Map.Entry<BigInteger, ECSNode> entry : KVServerInstance.getMetaData().entrySet()) {
+						ECSNode node = entry.getValue();
+						node.printNodeDetails();
+					}
+					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					if (this.dataTransferTarget != ""){ 
+						TreeMap<String, String> KVtransfers = this.KVServerInstance.getKVsToBeTransferred();
+						Message target = new Message(this.dataTransferTarget, null, KVMessage.StatusType.DATA_TRANSFER_START);
+						sendMessageSafe(target);
+						if (KVtransfers.size() != 0){
+							sendMapToECS(KVtransfers);
+						} else{
+							logger.info("No data found to be transferred");
+						}
+						sendMessageSafe(new Message(null, null, KVMessage.StatusType.DATA_TRANSFER_COMPLETE));
+					} 
+					this.dataTransferTarget = "";
+
+					//handle adding/deleting replicas based on metadata update
+					int currNumServers = this.KVServerInstance.getMetaDataSize();
+					if(currNumServers == 1){
+						if (currNumServers < this.prevNumServers){ //case where num servers goes from 2->1
+							if(this.KVServerInstance.disk.replicaExists(1)){
+								this.KVServerInstance.disk.deleteReplica(1);
+							}
+						}
+						this.updateAllReplicas = false;
+					}
+					if(currNumServers == 2){
+						if (currNumServers < this.prevNumServers){ //case where num servers goes from 3->2
+							if(this.KVServerInstance.disk.replicaExists(2)){
+								this.KVServerInstance.disk.deleteReplica(2);
+							}
+						} else{
+							if(!this.KVServerInstance.disk.replicaExists(1)){
+								this.KVServerInstance.disk.createReplicaDirectory(1);
+							}
+						}
+					}
+					if(currNumServers == 3){
+						if (currNumServers > this.prevNumServers){ //case where num servers goes from 2->3
+							if(!this.KVServerInstance.disk.replicaExists(2)){
+								this.KVServerInstance.disk.createReplicaDirectory(2);
+							}
+						}
+					}
+					this.prevNumServers = currNumServers;
+
+					if(this.updateAllReplicas){
+						sendReplicastoECS();
+					}
+					this.updateAllReplicas = false;
 				}
-             } 
-             this.dataTransferTarget = "";
-         }
-         break;
+				break;
 			case INITIALIZE_DATA_TRANSFER:
 				this.dataTransferTarget = msg.getKey();
+				this.updateAllReplicas = true;
 				break;
 			case DATA_TRANSFER_START:
 				//write lock (receiving data)
@@ -304,6 +344,8 @@ public class ConnectionManager extends Thread {
 			case DATA_TRANSFER_COMPLETE:
 				//disable write lock
 				this.KVServerInstance.updateWriteLock("unlock");
+				//call function to update all replicas
+				sendReplicastoECS();
 				break;
 			case SHUTDOWN:
 				try{
@@ -330,15 +372,64 @@ public class ConnectionManager extends Thread {
 				break;
 			case HEARTBEAT_PING:
 				replyHeartbeat();
+				//send KV update if needed
+				if(this.KVServerInstance.newKVPut){
+					String newKey = this.KVServerInstance.newKVKey;
+					String newValue = this.KVServerInstance.newKVValue;
+					send1KVtoReplicas(newKey, newValue);
+					this.KVServerInstance.newKVPut = false;
+				}
 				break;
-			case COORDINATOR:
-				//ecs sets this server as coordinator
+			case UPDATE_REPLICAS:
+				this.updateAllReplicas = true;
+				break;
+			case INSERT_REPLICA_1:
+				//insert replica 1 to disk
+				this.KVServerInstance.disk.insertReplicaIntoDisk(1);
+				this.KVServerInstance.disk.deleteReplica(1);
+				this.updateAllReplicas = true;
+				break;
+			case INSERT_REPLICA_2:
+				//insert replica 1 and 2 to disk
+				this.KVServerInstance.disk.insertReplicaIntoDisk(1);
+				this.KVServerInstance.disk.deleteReplica(1);
+				this.KVServerInstance.disk.insertReplicaIntoDisk(2);
+				this.KVServerInstance.disk.deleteReplica(2);
+				this.updateAllReplicas = true;
+				break;
+			case NEW_REPLICA_1:
+				//delete files in replica 1
+				if(this.KVServerInstance.disk.replicaExists(1)){
+					this.KVServerInstance.disk.deleteReplica(1);
+				}
+				this.KVServerInstance.disk.createReplicaDirectory(1);
+				break;
+			case NEW_REPLICA_2:
+				//delete files in replica 2
+				if(this.KVServerInstance.disk.replicaExists(2)){
+					this.KVServerInstance.disk.deleteReplica(2);
+				}
+				this.KVServerInstance.disk.createReplicaDirectory(2);
 				break;
 			case REPLICA_1:
-				//ecs sets this server as replica1
+				//insert KV into replica 1
+				String key1 = msg.getKey();
+				String value1 = msg.getValue();
+				try{
+					this.KVServerInstance.disk.replicaAddKV(key1, value1, 1);
+				} catch(Exception e){
+					logger.error("Failed to put KV Pair (Replica 1):" + key1 + ":" + value1 + " - " + e.getMessage());
+				}
 				break;
 			case REPLICA_2:
-				//ecs sets this server as replica2
+				//insert KV into replica 2
+				String key2 = msg.getKey();
+				String value2 = msg.getValue();
+				try{
+					this.KVServerInstance.disk.replicaAddKV(key2, value2, 2);
+				} catch(Exception e){
+					logger.error("Failed to put KV Pair (Replica 2):" + key2 + ":" + value2 + " - " + e.getMessage());
+				}
 				break;
 		default:
 				System.out.println("Error Handling message from ECS:" + msg.getStringMessage());
@@ -352,12 +443,56 @@ public class ConnectionManager extends Thread {
 		sendMessageSafe(msg);
 	}
 
+	public void send1KVtoReplicas(String key, String value){
+		if(this.prevNumServers > 1){ 
+			Message addr = new Message(this.KVServerInstance.getReplicaAddress(1), null, KVMessage.StatusType.REPLICA_1_DEST);
+			sendMessageSafe(addr);
+			Message kv = new Message(key, value, KVMessage.StatusType.REPLICA_1);
+			sendMessageSafe(kv);
+		}
+		if(this.prevNumServers > 2){
+			Message addr = new Message(this.KVServerInstance.getReplicaAddress(2), null, KVMessage.StatusType.REPLICA_1_DEST);
+			sendMessageSafe(addr);
+			Message kv = new Message(key, value, KVMessage.StatusType.REPLICA_2);
+			sendMessageSafe(kv);
+		}
+	}
+
 	public void sendMapToECS(TreeMap<String,String> KVs){
 		for (Map.Entry<String, String> entry : KVs.entrySet()){
 			String key = entry.getKey();
 			String value = entry.getValue();
 			Message kv = new Message(key, value, KVMessage.StatusType.DATA_TRANSFER);
 			sendMessageSafe(kv);
+		}
+	}
+	public void sendReplicastoECS(){
+		if(this.prevNumServers > 1){
+			try{
+				TreeMap<String, String> allKVs = this.KVServerInstance.getAllKVs();
+				if (allKVs.size() != 0){
+					Message addr = new Message(this.KVServerInstance.getReplicaAddress(1), null, KVMessage.StatusType.NEW_REPLICA_1);
+					sendMessageSafe(addr);
+					for (Map.Entry<String, String> entry : allKVs.entrySet()){
+						String key = entry.getKey();
+						String value = entry.getValue();
+						Message kv = new Message(key, value, KVMessage.StatusType.REPLICA_1);
+						sendMessageSafe(kv);
+					}
+					if(this.prevNumServers > 2){
+						Message addr2 = new Message(this.KVServerInstance.getReplicaAddress(2), null, KVMessage.StatusType.NEW_REPLICA_2);
+						sendMessageSafe(addr2);
+						for (Map.Entry<String, String> entry : allKVs.entrySet()){
+							String key = entry.getKey();
+							String value = entry.getValue();
+							Message kv2 = new Message(key, value, KVMessage.StatusType.REPLICA_2);
+							sendMessageSafe(kv2);
+						}
+					}
+				}
+			} catch (Exception e){
+				logger.error("Failed to get all KVs:" + e.toString());
+			}
 		}
 	}
 	public void sendMessageSafe(Message msg){ 
