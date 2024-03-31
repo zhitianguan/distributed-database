@@ -412,6 +412,179 @@ public class AdditionalTest extends TestCase {
 
 	}
 
+	@Test
+	public void serverFailureTesting(){ //ensure ecs still functions when server disconnected (heartbeat handled properly)
+		Exception ex = null;
+		String ecsAddress = "127.7.7.7";
+		int ecsPort = 2011;
+		KVMessage message = null;
+
+		ECSClient ecsServer = new ECSClient(ecsAddress,ecsPort);
+
+		KVServer kvServerOne = new KVServer("127.0.0.1",9021, "dir1", 100,"default", ecsAddress, ecsPort);
+
+
+		try{
+			new Thread(ecsServer).start();
+			Thread.sleep(1000);
+			new Thread(kvServerOne).start();
+			Thread.sleep(1000);
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+		assertTrue (ex == null);
+
+		try{
+			kvServerOne.close();
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+
+		assertTrue (ex == null);
+		assertTrue (ecsServer.getError() == null);
+
+		ecsServer.stop();
+
+	}
+
+	@Test 
+	public void getKeyrangeRead(){
+		Exception ex = null;
+		String ecsAddress = "127.7.7.7";
+		int ecsPort = 2001;
+		KVMessage message = null;
+
+		ECSClient ecsServer = new ECSClient(ecsAddress,ecsPort);
+
+		KVServer kvServerOne = new KVServer("127.0.0.1",9005, ".", 100,"default", ecsAddress, ecsPort);
+		KVStore kvClient = new KVStore("127.0.0.1", 9005);
+
+
+		try{
+			new Thread(ecsServer).start();
+			Thread.sleep(1000);
+			new Thread(kvServerOne).start();
+			Thread.sleep(1000);
+			kvClient.connect();
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+		assertTrue (ex == null);
+
+		try{
+			message = kvClient.requestMetadata(); //change to requestKeyRangeRead once completed
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+
+		assertTrue (ex == null);
+
+		assertTrue(message.getStatus() == KVMessage.StatusType.KEYRANGE_SUCCESS);
+
+		kvServerOne.close();
+		ecsServer.stop();
+	}
+
+
+	@Test 
+	public void GettingFromReplica(){ //server dies, get from replica server
+		Exception ex = null;
+		String ecsAddress = "127.8.8.8";
+		int ecsPort = 2011;
+		KVMessage message = null;
+
+		ECSClient ecsServer = new ECSClient(ecsAddress,ecsPort);
+
+		KVServer kvServerOne = new KVServer("127.0.0.2",9021, "dir1", 100,"default", ecsAddress, ecsPort);
+		KVServer kvServerTwo = new KVServer("127.0.0.2",9022,"dir2" , 100,"default", ecsAddress,ecsPort);
+		KVStore kvClient = new KVStore("127.0.0.2", 9021);
+
+
+		try{
+			new Thread(ecsServer).start();
+			Thread.sleep(1000);
+			new Thread(kvServerOne).start();
+			Thread.sleep(1000);
+			new Thread(kvServerTwo).start();
+			kvClient.connect();
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+		assertTrue (ex == null);
+
+
+
+		try{
+			kvServerOne.close();
+			message = kvClient.get("127.0.0.2:9022"); //client connected to kvservertwo
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+
+		assertTrue (ex == null);
+
+		assertTrue(message.getStatus() == KVMessage.StatusType.GET_SUCCESS); 
+
+		kvServerTwo.close();
+		ecsServer.stop();
+
+	}
+
+	@Test
+	public void multipleServersKilled(){
+		Exception ex = null;
+		String ecsAddress = "127.7.7.7";
+		int ecsPort = 2011;
+		KVMessage message = null;
+
+		ECSClient ecsServer = new ECSClient(ecsAddress,ecsPort);
+
+		KVServer kvServerOne = new KVServer("127.0.0.3",9023, "dir1", 100,"default", ecsAddress, ecsPort);
+		KVServer kvServerTwo = new KVServer("127.0.0.3",9024, "dir2", 100, "default", ecsAddress, ecsPort);
+
+
+		try{
+			new Thread(ecsServer).start();
+			Thread.sleep(1000);
+			new Thread(kvServerOne).start();
+			Thread.sleep(1000);
+			new Thread (kvServerTwo).start();
+			Thread.sleep(1000);
+
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+		assertTrue (ex == null);
+
+		try{
+			kvServerOne.close();
+			kvServerTwo.close();
+		}
+		catch(Exception e){
+			ex = e;
+		}
+
+
+		assertTrue (ex == null);
+		assertTrue (ecsServer.getError() == null);
+
+		ecsServer.stop();
+
+	}
 
 }
 
