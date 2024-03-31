@@ -264,7 +264,6 @@ public class ConnectionManager extends Thread {
 		switch (msgType){
 			case METADATA_UPDATE:
 				KVServerInstance.setMetaData (stringToMetadata(msg.getKey()));
-
 				if (KVServerInstance.getMetaData().isEmpty()) {
 					System.out.println("Metadata is empty. No ECS nodes are currently in the system.");
 				} else {
@@ -377,7 +376,14 @@ public class ConnectionManager extends Thread {
 				replyHeartbeat();
 				//send KV update if needed
 				if(this.KVServerInstance.newKVPut){
-					sendNewKVstoReplicas();				}
+					if(this.prevNumServers > 1){
+						sendNewKVstoReplicas();	
+					} else {
+						this.KVServerInstance.newKVKey.clear();
+						this.KVServerInstance.newKVValue.clear();
+						this.KVServerInstance.newKVPut = false;
+					}			
+				}
 				break;
 			case UPDATE_REPLICAS:
 				this.updateAllReplicas = true;
