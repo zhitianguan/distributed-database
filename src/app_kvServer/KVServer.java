@@ -358,6 +358,8 @@ public KVMessage getKV(String key) throws Exception {
             sb.append(key.toString());
 
 			if (keyrange_read) {
+				sb.append(",");
+
 				// Finding and updating the 1st successor
 				Map.Entry<BigInteger, ECSNode> higherEntry = this.metadata.higherEntry(new BigInteger(node.getEndingHashIdx(), 16));
 
