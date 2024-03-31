@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.ArrayList;
 import java.math.BigInteger;
 import java.security.*;
 
@@ -57,8 +58,9 @@ public class ECSClient implements IECSClient,Runnable {
     private ScheduledExecutorService heartbeatScheduler;
 
     public enum ReplicaEventType{
-        SERVER_ADDED,
         SERVER_DISCONNECTED,
+        SERVER_SHUTDOWN,
+        SERVER_ADDED
     }
 
     public void scheduleHeartbeat() {
@@ -320,19 +322,86 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
 
     public void handleReplicaLogic(String clientAddress,ReplicaEventType type){
 
-        String targetCoordinator = "";
-        String targetReplica1 = "";
-        String targetReplica2 = "";
+        BigInteger hashedServerAddress = hash(clientAddress);
 
         switch (type){
 
             case SERVER_DISCONNECTED:
                 logger.info("Handling server removal here" + clientAddress + " here");
-                //do some logic here to find the targets?
+                //BigInteger disconnectedServer = metadata.get(hashedServerAddress).getKey();
+                Map.Entry<BigInteger, ECSNode> serverReplica = metadata.higherEntry(hashedServerAddress);
+                if(serverReplica == null){
+                    serverReplica = metadata.firstEntry();
+                }
+                ECSNode replicaNode = serverReplica.getValue();
+                String replicaAddress = replicaNode.getNodeHost() + ":" + replicaNode.getNodePort();
+                //send message to move replica1 into server's disk
+                Message insertReplica1 = new Message(null, null, KVMessage.StatusType.INSERT_REPLICA_1);
+                //need to find a way to track whether or not the client receives the message for case where two subsequent servers are dropped
+                logger.info("Sending insert replica to address : " + replicaAddress);
+                this.sendToClient(replicaAddress, insertReplica1);
+                //if (message not sent){}
+                
+                //find two predecessor servers 
+                if(this.metadata.size() > 2){ //case where 3 or more servers -> 2 or more servers
+                    Map.Entry<BigInteger, ECSNode> predecessor1 = metadata.lowerEntry(hashedServerAddress);
+                    if(predecessor1 == null){
+                        predecessor1 = metadata.lastEntry();
+                    }
+                    ECSNode node1 = predecessor1.getValue();
+                    String predecessor1Addr = node1.getNodeHost() + ":" + node1.getNodePort();
+                    Message updateReps = new Message(null, null, KVMessage.StatusType.UPDATE_REPLICAS);
+                    this.sendToClient(predecessor1Addr, updateReps);
+                    if(this.metadata.size() > 3){ //case where 4 or more servers -> 3 or more servers
+                        Map.Entry<BigInteger, ECSNode> predecessor2 = metadata.lowerEntry(predecessor1.getKey());
+                        if(predecessor2 == null){
+                            predecessor2 = metadata.lastEntry();
+                        }
+                        ECSNode node2 = predecessor2.getValue();
+                        String predecessor2Addr = node2.getNodeHost() + ":" + node2.getNodePort();
+                        this.sendToClient(predecessor2Addr, updateReps);
+                    }
+                }
+                break;
+            case SERVER_SHUTDOWN:
+                if(this.metadata.size() > 2){ //case where 3 or more servers -> 2 or more servers
+                    Map.Entry<BigInteger, ECSNode> predecessor1 = metadata.lowerEntry(hashedServerAddress);
+                    if(predecessor1 == null){
+                        predecessor1 = metadata.lastEntry();
+                    }
+                    ECSNode node1 = predecessor1.getValue();
+                    String predecessor1Addr = node1.getNodeHost() + ":" + node1.getNodePort();
+                    Message updateReps = new Message(null, null, KVMessage.StatusType.UPDATE_REPLICAS);
+                    this.sendToClient(predecessor1Addr, updateReps);
+                    if(this.metadata.size() > 3){ //case where 4 or more servers -> 3 or more servers
+                        Map.Entry<BigInteger, ECSNode> predecessor2 = metadata.lowerEntry(predecessor1.getKey());
+                        if(predecessor2 == null){
+                            predecessor2 = metadata.lastEntry();
+                        }
+                        ECSNode node2 = predecessor2.getValue();
+                        String predecessor2Addr = node2.getNodeHost() + ":" + node2.getNodePort();
+                        this.sendToClient(predecessor2Addr, updateReps);
+                    }
+                }
                 break;
             case SERVER_ADDED:
                 logger.info("Handling added server here" + clientAddress + " here");
-                //do some logic here to find the targets?
+                if(this.metadata.size() >= 2){ //third or more server being added
+                    //only need to cover the 2nd predecessor of the new server since the new server and precessor should be covered in data transfer
+                    Map.Entry<BigInteger, ECSNode> predecessor1 = metadata.lowerEntry(hashedServerAddress);
+                    if(predecessor1 == null){
+                        predecessor1 = metadata.lastEntry();
+                    }
+                    Map.Entry<BigInteger, ECSNode> predecessor2 = metadata.lowerEntry(predecessor1.getKey());
+                    if(predecessor2 == null){
+                        predecessor2 = metadata.lastEntry();
+                    }
+                    ECSNode node2 = predecessor2.getValue();
+                    String predecessor2Addr = node2.getNodeHost() + ":" + node2.getNodePort();
+                    //could change this to UPDATE_REPLICA2 only or something if have time
+                    Message updateReps = new Message(null, null, KVMessage.StatusType.UPDATE_REPLICAS);
+                    this.sendToClient(predecessor2Addr, updateReps);
+                }
                 break;
             default:
                 break;
@@ -348,7 +417,8 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
         Message message = new Message("", "", KVMessage.StatusType.HEARTBEAT_PING);
         for (ClientConnection clientConnection : clientConnections) {
             Socket socket = clientConnection.getClientSocket();
-            String currentClientAddress = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+            //String currentClientAddress = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+            String currentClientAddress = clientConnection.getServerAddress() + ":" + clientConnection.getServerPort();
             logger.info("Sending message to server : " + currentClientAddress);
             try{
                 clientConnection.sendMessage(message); //we want to catch error here, so don't use sendSafe 
@@ -357,7 +427,13 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
                 logger.info("Failed sending message to server "+ currentClientAddress + ", server disconnected");
                 handleReplicaLogic(currentClientAddress,ReplicaEventType.SERVER_DISCONNECTED);
                 //removeNodes() call the regular removenodes logic here
+                Collection<String> nodeNames = new ArrayList<>();
+                nodeNames.add(currentClientAddress);
+                removeNodes(nodeNames);
                 this.clientConnections.remove(clientConnection);
+                //send metadata update to all servers
+                Message msg = new Message(metadataToString(), null, KVMessage.StatusType.METADATA_UPDATE);
+                this.sendToAllClients(msg);
             }
         }
     }
