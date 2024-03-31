@@ -294,7 +294,7 @@ public class ClientConnection implements Runnable {
 					}
 					break;
 				case KEYRANGE :
-					sendMessageSafe(new Message(kvServer.metadataToStringForKeyRange(false),"\r\n", KVMessage.StatusType.KEYRANGE_SUCCESS));
+					sendMessageSafe(new Message(kvServer.metadataToString(),"\r\n", KVMessage.StatusType.KEYRANGE_SUCCESS));
 					break;
 				case KEYRANGE_READ:
 					sendMessageSafe(new Message(kvServer.metadataToStringForKeyRange(true),"\r\n", KVMessage.StatusType.KEYRANGE_READ_SUCCESS));

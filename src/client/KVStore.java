@@ -220,7 +220,6 @@ public class KVStore extends Thread implements KVCommInterface {
 		try{
 			if (!keyrange_read) {
 				sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE));
-				
 			} else {
 				sendMessage(new Message(null,null,KVMessage.StatusType.KEYRANGE_READ));	
 			}
@@ -255,8 +254,11 @@ public class KVStore extends Thread implements KVCommInterface {
 				//if not io exception, let it loop usually (based on testing) it hasn't finished reading
 			}
 			}
-			this.metadata = ConnectionManager.stringToMetadata(message.getKey());
-			message = new Message(metadataToStringForKeyRange(), null, KVMessage.StatusType.KEYRANGE_SUCCESS);
+			
+			if (!keyrange_read) {
+				this.metadata = ConnectionManager.stringToMetadata(message.getKey());
+				message = new Message(metadataToStringForKeyRange(), null, KVMessage.StatusType.KEYRANGE_SUCCESS);
+			}
 			return message;
 		}
 		catch(Exception e){

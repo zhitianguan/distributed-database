@@ -347,13 +347,13 @@ public KVMessage getKV(String key) throws Exception {
 	public String metadataToStringForKeyRange(boolean keyrange_read) {		
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<BigInteger, ECSNode> entry : this.metadata.entrySet()) {
-            String key = entry.getValue().getNodeHost() + ":" + entry.getValue().getNodePort();
             ECSNode node = entry.getValue();
+            String key = node.getNodeHost() + ":" + node.getNodePort();
             sb.append(node.getStartingHashIdx());
             sb.append(",");
             sb.append(node.getEndingHashIdx());
             sb.append(",");
-            sb.append(key.toString());
+            sb.append(key);
 
 			if (keyrange_read) {
 				sb.append(",");
@@ -370,7 +370,7 @@ public KVMessage getKV(String key) throws Exception {
 				String key1 = successor1.getNodeHost() + ":" + successor1.getNodePort();
 
 
-				sb.append(key1.toString());
+				sb.append(key1);
 				sb.append(",");
 
 
@@ -391,7 +391,7 @@ public KVMessage getKV(String key) throws Exception {
 
 				String key2 = successor2.getNodeHost() + ":" + successor2.getNodePort();
 
-				sb.append(key2.toString());
+				sb.append(key2);
         	}	
 
             sb.append(";");
