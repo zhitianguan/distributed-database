@@ -317,6 +317,7 @@ public class ClientConnection implements Runnable{
 					break;
 				case NEW_REPLICA_1:
 					this.replica1Addr = latestMessage.getKey();
+					logger.info("Replica 1 Destination:" + this.replica1Addr);
 					Message newRep1Msg = new Message(null, null, KVMessage.StatusType.NEW_REPLICA_1);
 					this.ecsClient.sendToClient(this.replica1Addr, newRep1Msg);
 					break;
@@ -381,8 +382,8 @@ public class ClientConnection implements Runnable{
 		this.serverAddress = serverAddress;
 		this.serverPort =  Integer.parseInt(serverPort);;
 
-		this.ecsClient.addNode(this.serverAddress, this.serverPort,"default caching strat", 0);
 		this.ecsClient.handleReplicaLogic(this.serverAddress+":"+this.serverPort, ReplicaEventType.SERVER_ADDED);
+		this.ecsClient.addNode(this.serverAddress, this.serverPort,"default caching strat", 0);
 
 	}
 

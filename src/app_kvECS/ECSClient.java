@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.ArrayList;
 import java.math.BigInteger;
 import java.security.*;
 
@@ -424,6 +425,9 @@ public IECSNode addNode(String serverAddress, int serverPort,String cacheStrateg
                 logger.info("Failed sending message to server "+ currentClientAddress + ", server disconnected");
                 handleReplicaLogic(currentClientAddress,ReplicaEventType.SERVER_DISCONNECTED);
                 //removeNodes() call the regular removenodes logic here
+                Collection<String> nodeNames = new ArrayList<>();
+                nodeNames.add(currentClientAddress);
+                removeNodes(nodeNames);
                 this.clientConnections.remove(clientConnection);
                 //send metadata update to all servers
                 Message msg = new Message(metadataToString(), null, KVMessage.StatusType.METADATA_UPDATE);
