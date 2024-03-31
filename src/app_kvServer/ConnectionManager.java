@@ -473,19 +473,21 @@ public class ConnectionManager extends Thread {
 	public void sendReplicastoECS(){
 		if(this.prevNumServers > 1){
 			try{
+				Message addr = new Message(this.KVServerInstance.getReplicaAddress(1), null, KVMessage.StatusType.NEW_REPLICA_1);
+				sendMessageSafe(addr);
 				TreeMap<String, String> allKVs = this.KVServerInstance.getAllKVs();
 				if (allKVs.size() != 0){
-					Message addr = new Message(this.KVServerInstance.getReplicaAddress(1), null, KVMessage.StatusType.NEW_REPLICA_1);
-					sendMessageSafe(addr);
 					for (Map.Entry<String, String> entry : allKVs.entrySet()){
 						String key = entry.getKey();
 						String value = entry.getValue();
 						Message kv = new Message(key, value, KVMessage.StatusType.REPLICA_1);
 						sendMessageSafe(kv);
 					}
-					if(this.prevNumServers > 2){
-						Message addr2 = new Message(this.KVServerInstance.getReplicaAddress(2), null, KVMessage.StatusType.NEW_REPLICA_2);
-						sendMessageSafe(addr2);
+				}
+				if(this.prevNumServers > 2){
+					Message addr2 = new Message(this.KVServerInstance.getReplicaAddress(2), null, KVMessage.StatusType.NEW_REPLICA_2);
+					sendMessageSafe(addr2);
+					if (allKVs.size() != 0){
 						for (Map.Entry<String, String> entry : allKVs.entrySet()){
 							String key = entry.getKey();
 							String value = entry.getValue();

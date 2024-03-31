@@ -298,10 +298,9 @@ public class KVDisk {
                     this.KVReplicaTwoPath = null;
                 }
                 File replicaFolder = new File(replicaPath);
-                File[] listOfFiles = replicaFolder.listFiles();
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    if (listOfFiles[i].isFile()) {
-                        listOfFiles[i].delete();
+                for(File file: replicaFolder.listFiles()){
+                    if (!file.isDirectory()){ 
+                        file.delete();
                     }
                 }
                 //delete folder here
