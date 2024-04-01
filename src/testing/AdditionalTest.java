@@ -478,7 +478,7 @@ public class AdditionalTest extends TestCase {
 		assertTrue (ex == null);
 
 		try{
-			message = kvClient.requestMetadata(); //change to requestKeyRangeRead once completed
+			message = kvClient.requestMetadata(true);
 		}
 		catch(Exception e){
 			ex = e;
@@ -487,7 +487,7 @@ public class AdditionalTest extends TestCase {
 
 		assertTrue (ex == null);
 
-		assertTrue(message.getStatus() == KVMessage.StatusType.KEYRANGE_SUCCESS);
+		assertTrue(message.getStatus() == KVMessage.StatusType.KEYRANGE_READ_SUCCESS);
 
 		kvServerOne.close();
 		ecsServer.stop();
